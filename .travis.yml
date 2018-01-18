@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+
+install:
+  - composer selfupdate
+  - composer install
+
+before_script:
+  - chmod -R 777 app/cache
+
+script:
+  - composer test
