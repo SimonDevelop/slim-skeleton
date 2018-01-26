@@ -20,10 +20,10 @@ class Controller
 
     public function alert($message, $type = "success")
     {
-        if (!isset($_SESSION['alert'])) {
-            $_SESSION['alert'] = [];
+        if (!isset($_SESSION['slimFlash'])) {
+            $_SESSION['slimFlash'] = [];
         }
-        return $_SESSION['alert'][$type] = $message;
+        return $_SESSION['slimFlash'][$type] = $message;
     }
 
     public function tokenCheck($token)
@@ -39,7 +39,7 @@ class Controller
 
     public function render(ResponseInterface $response, $file, $params = [])
     {
-        $this->container->view->render($response, $file, $params);
+        $this->container->renderer->render($response, $file, $params);
     }
 
     public function redirect(ResponseInterface $response, $name, $status = 302)
