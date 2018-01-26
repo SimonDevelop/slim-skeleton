@@ -11,8 +11,5 @@ install:
   - composer selfupdate
   - composer install
 
-before_script:
-  - chmod -R 777 app/cache
-
 script:
   - composer test
