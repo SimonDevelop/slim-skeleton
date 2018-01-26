@@ -51,8 +51,19 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // Set up a response object
         $response = new Response();
 
+        // Configuration slim
+        $configuration = [
+          'settings' => [
+            'displayErrorDetails' => true,
+            'renderer' => [
+                'template_path' => __DIR__ . '/../../app/src/Views/',
+            ],
+          ],
+        ];
+
         // Instantiate the application
-        $app = new App();
+        $c = new \Slim\Container($configuration);
+        $app = new App($c);
 
         // Use session for middlewares
         if ($this->withMiddleware) {

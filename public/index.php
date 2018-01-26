@@ -13,10 +13,13 @@ if (PHP_SAPI == 'cli-server') {
 // Autoload de composer
 require __DIR__ . '/../vendor/autoload.php';
 
-// Configuration slim pour les messages d'erreurs
+// Configuration slim
 $configuration = [
   'settings' => [
     'displayErrorDetails' => true,
+    'renderer' => [
+        'template_path' => __DIR__ . '/../app/src/Views/',
+    ],
   ],
 ];
 
@@ -28,10 +31,6 @@ $app = new \Slim\App($c);
 
 // Initialisation des sessions/cookies
 if (session_status() == PHP_SESSION_NONE) {
-    // 3600 => 1h
-    // 21600 => 6h
-    // 86400 => 24h
-    // session_set_cookie_params(21600);
     session_start();
 }
 
@@ -43,9 +42,6 @@ require __DIR__ . '/../app/config/middlewares.php';
 
 // Le fichier ou l'on déclare les routes
 require __DIR__ . '/../app/config/routes.php';
-
-// Le fichier de configuration des pages d'erreur
-require __DIR__ . '/../app/config/error_pages.php';
 
 // Execution de Slim
 $app->run();
