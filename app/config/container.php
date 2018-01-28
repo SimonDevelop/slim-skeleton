@@ -8,12 +8,12 @@ $container['renderer'] = function ($configuration) {
 };
 
 // Messages flash
-$container['flash'] = function ($container) {
-    return new \Slim\Flash\Messages($container);
+$container['flash'] = function () {
+    return new \Slim\Flash\Messages();
 };
 
 // Csrf
-$container['csrf'] = function ($container) {
+$container['csrf'] = function () {
     $guard = new \Slim\Csrf\Guard();
     $guard->setFailureCallable(function ($request, $response, $next) {
         $request = $request->withAttribute("csrf_status", false);

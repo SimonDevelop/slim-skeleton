@@ -8,12 +8,12 @@ class FlashMiddleware
 {
     public function __invoke(Request $request, Response $response, $next)
     {
-        if (isset($_SESSION['Flash'])) {
-            unset($_SESSION['Flash']);
+        if (isset($_SESSION['flash'])) {
+            unset($_SESSION['flash']);
         }
-        if (isset($_SESSION['slimFlash'])) {
-            $_SESSION['Flash'] = $_SESSION['slimFlash'];
-            unset($_SESSION['slimFlash']);
+        if (isset($_SESSION['flash2'])) {
+            $_SESSION['flash'] = $_SESSION['flash2'];
+            unset($_SESSION['flash2']);
         }
         return $next($request, $response);
     }
