@@ -9,7 +9,7 @@
   <body>
 
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="{{ path_for('home') }}">
+      <a class="navbar-brand" href="">
         Slim skeleton
       </a>
     </nav>
