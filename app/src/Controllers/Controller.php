@@ -20,10 +20,10 @@ class Controller
 
     public function alert($message, $type = "success")
     {
-        if (!isset($_SESSION['flash2'])) {
-            $_SESSION['flash2'] = [];
+        if (!isset($_SESSION['alert2'])) {
+            $_SESSION['alert2'] = [];
         }
-        return $_SESSION['flash2'][$type] = $message;
+        return $_SESSION['alert2'][$type] = $message;
     }
 
     public function tokenCheck($token)
