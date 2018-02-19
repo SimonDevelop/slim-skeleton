@@ -1,4 +1,4 @@
-[![version](https://img.shields.io/badge/Version-1.3-brightgreen.svg)](https://github.com/SimonDevelop/slim-skeleton/releases/tag/1.3)
+[![version](https://img.shields.io/badge/Version-1.4-brightgreen.svg)](https://github.com/SimonDevelop/slim-skeleton/releases/tag/1.4)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.5-8892BF.svg)](https://php.net/)
 [![Build Status](https://travis-ci.org/SimonDevelop/slim-skeleton.svg?branch=master)](https://travis-ci.org/SimonDevelop/slim-skeleton)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SimonDevelop/slim-skeleton/blob/master/LICENSE)
