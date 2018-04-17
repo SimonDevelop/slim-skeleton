@@ -6,7 +6,7 @@
 
 Simple Skeleton `slim 3` avec des middlewares pour la gestion de tokens/csrf.
 
-Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md](https://github.com/SimonDevelop/slim-skeleton/blob/master/CONTRIBUTING.md).
+Pour toutes contribution sur github, merci de lire le document [CONTRIBUTING.md](https://github.com/SimonDevelop/slim-skeleton/blob/master/.github/CONTRIBUTING.md).
 
 ## Installation
 
