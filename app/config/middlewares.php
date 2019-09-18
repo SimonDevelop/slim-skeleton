@@ -9,4 +9,4 @@ $app->add(new Middlewares\AlertMiddleware());
 $app->add(new Middlewares\TokenMiddleware());
 
 // Middleware csrf
-$app->add($container->get('csrf'));
+$app->add('csrf');

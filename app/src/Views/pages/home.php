@@ -4,8 +4,8 @@
 
   <?php
     // Messages flash
-    if (isset($_SESSION['flash']) && !empty($_SESSION['flash'])) {
-        foreach ($_SESSION['flash'] as $k => $v) {
+    if (isset($_SESSION['alert']) && !empty($_SESSION['alert'])) {
+        foreach ($_SESSION['alert'] as $k => $v) {
             echo "<div class=\"alert alert-dismissible alert-".$k." container\">
                     <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>";
             foreach ($v as $msg) {

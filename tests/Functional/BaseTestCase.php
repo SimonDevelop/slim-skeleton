@@ -2,10 +2,16 @@
 
 namespace Tests\Functional;
 
+use DI\Container;
+use Exception;
+use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
-use Slim\Http\Request;
-use Slim\Http\Response;
-use Slim\Http\Environment;
+use Slim\Factory\AppFactory;
+use Slim\Psr7\Factory\StreamFactory;
+use Slim\Psr7\Headers;
+use Slim\Psr7\Request as SlimRequest;
+use Slim\Psr7\Uri;
 
 /**
  * This is an example class that shows how you could set up a method that
@@ -13,78 +19,61 @@ use Slim\Http\Environment;
  * tuned to the specifics of this skeleton app, so if your needs are
  * different, you'll need to change it.
  */
-class BaseTestCase extends \PHPUnit_Framework_TestCase
+class BaseTestCase extends PHPUnit_TestCase
 {
     /**
-     * Use middleware when running application?
-     *
-     * @var bool
+     * @return App
+     * @throws Exception
      */
-    protected $withMiddleware = true;
+    protected function getAppInstance(): App
+    {
+        // Set the absolute path to the root directory.
+        $rootPath = realpath(dirname(__DIR__, 2));
+
+        // Create Container
+        $container = new Container();
+        AppFactory::setContainer($container);
+
+        // Create App
+        $app = AppFactory::create();
+        $app->addRoutingMiddleware();
+
+        // Le container qui compose nos librairies
+        require $rootPath . '/app/config/container.php';
+
+        // Appel des middlewares
+        require $rootPath . '/app/config/middlewares.php';
+
+        // Le fichier ou l'on déclare les routes
+        require $rootPath . '/app/config/routes.php';
+
+        return $app;
+    }
 
     /**
-     * Process the application given a request method and URI
-     *
-     * @param string $requestMethod the request method (e.g. GET, POST, etc.)
-     * @param string $requestUri the request URI
-     * @param array|object|null $requestData the request data
-     * @return \Slim\Http\Response
+     * @param string $method
+     * @param string $path
+     * @param array  $headers
+     * @param array  $serverParams
+     * @param array  $cookies
+     * @return Request
      */
-    public function runApp($requestMethod, $requestUri, $requestData = null)
-    {
-        // Create a mock environment for testing with
-        $environment = Environment::mock(
-            [
-                'REQUEST_METHOD' => $requestMethod,
-                'REQUEST_URI' => $requestUri
-            ]
-        );
+    protected function createRequest(
+        string $method,
+        string $path,
+        array $headers = [],
+        array $serverParams = [],
+        array $cookies = []
+    ): Request {
+        $uri = new Uri('', '', 80, $path);
+        $handle = fopen('php://temp', 'w+');
+        $stream = (new StreamFactory())->createStreamFromResource($handle);
 
-        // Set up a request object based on the environment
-        $request = Request::createFromEnvironment($environment);
-
-        // Add request data, if it exists
-        if (isset($requestData)) {
-            $request = $request->withParsedBody($requestData);
+        $h = new Headers();
+        foreach ($headers as $name => $value) {
+            $h->addHeader($name, $value);
         }
 
-        // Set up a response object
-        $response = new Response();
-
-        // Configuration slim
-        $configuration = [
-          'settings' => [
-            'displayErrorDetails' => true,
-            'renderer' => [
-                'template_path' => __DIR__ . '/../../app/src/Views/',
-            ],
-          ],
-        ];
-
-        // Instantiate the application
-        $c = new \Slim\Container($configuration);
-        $app = new App($c);
-
-        // Use session for middlewares
-        if ($this->withMiddleware) {
-            $_SESSION = [];
-        }
-
-        // Set up dependencies
-        require __DIR__ . '/../../app/config/container.php';
-
-        // Register middleware
-        if ($this->withMiddleware) {
-            require __DIR__ . '/../../app/config/middlewares.php';
-        }
-
-        // Register routes
-        require __DIR__ . '/../../app/config/routes.php';
-
-        // Process the application
-        $response = $app->process($request, $response);
-
-        // Return the response
-        return $response;
+        return new SlimRequest($method, $uri, $h, $cookies, $serverParams, $stream);
     }
 }

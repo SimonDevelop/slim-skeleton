@@ -1,18 +1,25 @@
 <?php
 
-$container = $app->getContainer();
+use Slim\Views\PhpRenderer;
+use Slim\Csrf\Guard;
 
-// View renderer
-$container['renderer'] = function ($configuration) {
-    return new Slim\Views\PhpRenderer($configuration['settings']['renderer']['template_path']);
-};
+// Router
+$container->set('router', function () use ($app) {
+    return $app->getRouteCollector()->getRouteParser();
+});
 
-// Csrf
-$container['csrf'] = function () {
-    $guard = new \Slim\Csrf\Guard();
-    $guard->setFailureCallable(function ($request, $response, $next) {
+// View
+$container->set('view', function () use ($app) {
+    return new PhpRenderer(dirname(__DIR__)."/src/Views/");
+});
+
+// csrf
+$responseFactory = $app->getResponseFactory();
+$container->set('csrf', function () use ($responseFactory) {
+    $guard = new Guard($responseFactory);
+    $guard->setFailureHandler(function (ServerRequestInterface $request, RequestHandlerInterface $handler) {
         $request = $request->withAttribute("csrf_status", false);
-        return $next($request, $response);
+        return $handler->handle($request);
     });
     return $guard;
-};
+});

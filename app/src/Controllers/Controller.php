@@ -1,14 +1,16 @@
 <?php
+
 namespace App\Controllers;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Container\ContainerInterface;
 
 class Controller
 {
-    private $container;
+    protected $container;
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
@@ -39,11 +41,11 @@ class Controller
 
     public function render(ResponseInterface $response, $file, $params = [])
     {
-        return $this->container->renderer->render($response, $file, $params);
+        return $this->container->get("view")->render($response, $file, $params);
     }
 
     public function redirect(ResponseInterface $response, $name, $status = 302)
     {
-        return $response->withStatus($status)->withHeader('Location', $this->router->pathFor($name));
+        return $response->withHeader('Location', $this->container->get("router")->urlFor($name))->withStatus($status);
     }
 }

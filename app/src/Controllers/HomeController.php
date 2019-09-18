@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use Psr\Http\Message\RequestInterface;
@@ -10,19 +11,21 @@ class HomeController extends Controller
     {
         $title = "Hello World!";
 
-        $csrfNameKey = $this->csrf->getTokenNameKey();
-        $csrfValueKey = $this->csrf->getTokenValueKey();
+        $csrf = $this->csrf;
+        $csrfNameKey = $csrf->getTokenNameKey();
+        $csrfValueKey = $csrf->getTokenValueKey();
         $csrfName = $request->getAttribute($csrfNameKey);
         $csrfValue = $request->getAttribute($csrfValueKey);
 
         $params = compact("title", "csrfNameKey", "csrfValueKey", "csrfName", "csrfValue");
-        $this->render($response, 'pages/home.php', $params);
+        return $this->render($response, "pages/home.php", $params);
     }
 
     public function postHome(RequestInterface $request, ResponseInterface $response)
     {
         if ($request->getAttribute('csrf_status') !== false) {
-            $_SESSION['name'] = $request->getParam('name');
+            $params = $request->getParsedBody();
+            $_SESSION['name'] = $params["name"];
             $this->alert(['Vous êtes connecté']);
             return $this->redirect($response, 'home');
         } else {
