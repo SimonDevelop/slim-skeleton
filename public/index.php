@@ -21,6 +21,7 @@ AppFactory::setContainer($container);
 // Create App
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
+$app->addBodyParsingMiddleware();
 $displayErrors = true;
 $app->addErrorMiddleware($displayErrors, true, true);
 
