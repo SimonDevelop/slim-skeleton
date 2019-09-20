@@ -13,10 +13,9 @@ $container->set('view', function () use ($app) {
     return new PhpRenderer(dirname(__DIR__)."/src/Views/");
 });
 
-// csrf
-$responseFactory = $app->getResponseFactory();
-$container->set('csrf', function () use ($responseFactory) {
-    $guard = new Guard($responseFactory);
+// Csrf
+$container->set('csrf', function () use ($app) {
+    $guard = new Guard($app->getResponseFactory());
     $guard->setFailureHandler(function (ServerRequestInterface $request, RequestHandlerInterface $handler) {
         $request = $request->withAttribute("csrf_status", false);
         return $handler->handle($request);

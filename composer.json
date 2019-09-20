@@ -4,7 +4,8 @@
   "keywords": [
     "template",
     "slim",
-    "csrf"
+    "csrf",
+    "token"
   ],
   "homepage": "https://github.com/SimonDevelop/slim-skeleton",
   "license": "MIT",
@@ -27,7 +28,7 @@
   "require": {
     "ext-json": "*",
     "php": ">=7.1",
-    "slim/slim": "^4.1",
+    "slim/slim": "^4.2",
     "slim/psr7": "^0.5",
     "php-di/php-di": "^6.0",
     "slim/csrf": "^1.0",
