@@ -23,7 +23,7 @@ $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 $displayErrors = true;
-$app->addErrorMiddleware($displayErrors, true, true);
+$app->addErrorMiddleware($displayErrors, false, false);
 
 // Le container qui compose nos librairies
 require $rootPath . '/app/config/container.php';
