@@ -1,6 +1,7 @@
 [![version](https://img.shields.io/badge/Version-2.0.2-brightgreen.svg)](https://github.com/SimonDevelop/slim-skeleton/releases/tag/2.0.2)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg)](https://php.net/)
 [![Build Status](https://travis-ci.org/SimonDevelop/slim-skeleton.svg?branch=master)](https://travis-ci.org/SimonDevelop/slim-skeleton)
+[![Github Actions PHP](https://github.com/SimonDevelop/slim-skeleton/workflows/PHP/badge.svg)](https://github.com/SimonDevelop/slim-skeleton/actions)
 [![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/SimonDevelop/slim-skeleton/blob/master/LICENSE)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSimonDevelop%2Fslim-skeleton.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSimonDevelop%2Fslim-skeleton?ref=badge_shield)
 # Slim skeleton
